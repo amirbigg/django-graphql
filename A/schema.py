@@ -1,8 +1,9 @@
 import graphene
+import home.schema
 
 
-class Query(graphene.ObjectType):
-	hello = graphene.String(default_value='Hello World')
+class Query(home.schema.HomeQuery, graphene.ObjectType):
+	pass
 
 
 schema = graphene.Schema(query=Query)
