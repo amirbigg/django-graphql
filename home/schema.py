@@ -75,6 +75,22 @@ class UpdatePerson(graphene.Mutation):
 		return UpdatePerson(person=person_instance, ok=ok)
 
 
+class DeletePerson(graphene.Mutation):
+	class Arguments:
+		id = graphene.ID()
+
+	person = graphene.Field(PersonType)
+	ok = graphene.Boolean(default_value=False)
+
+	@staticmethod
+	def mutate(parent, info, id):
+		person_instance = Person.objects.get(id=id)
+		person_instance.delete()
+		ok = True
+		return DeletePerson(person=person_instance, ok=ok)
+
+
 class Mutate(graphene.ObjectType):
 	create_person = CreatePerson.Field()
 	update_person = UpdatePerson.Field()
+	delete_person = DeletePerson.Field()
