@@ -36,3 +36,26 @@ class HomeQuery(ObjectType):
 		if id is not None:
 			return Car.objects.get(id=id)
 		return None
+
+
+class PersonInput(graphene.InputObjectType):
+	name = graphene.String()
+	age = graphene.Int()
+
+
+class CreatePerson(graphene.Mutation):
+	class Arguments:
+		input = PersonInput(required=True)
+
+	person = graphene.Field(PersonType)
+	ok = graphene.Boolean(default_value=False)
+
+	@staticmethod
+	def mutate(parent, info, input=None):
+		person_instance = Person.objects.create(name=input.name, age=input.age)
+		ok = True
+		return CreatePerson(person=person_instance, ok=ok)
+
+
+class Mutate(graphene.ObjectType):
+	create_person = CreatePerson.Field()
