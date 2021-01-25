@@ -10,7 +10,7 @@ class Person(models.Model):
 
 
 class Car(models.Model):
-	person = models.ForeignKey(Person, on_delete=models.CASCADE)
+	person = models.ManyToManyField(Person)
 	name = models.CharField(max_length=100)
 	year = models.IntegerField()
 
