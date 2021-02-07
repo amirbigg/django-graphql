@@ -86,6 +86,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -109,4 +114,7 @@ STATIC_URL = '/static/'
 
 GRAPHENE = {
     'SCHEMA': 'A.schema.schema',
+    'MIDDLEWARE':[
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ]
 }
